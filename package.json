@@ -1,0 +1,13 @@
+{
+  "name": "acfun-review-2017",
+  "version": "1.0.0",
+  "description": "AcFun End-of-year Review",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zxqdx",
+  "dependencies": {
+    "exceljs": "^0.8.1"
+  }
+}
