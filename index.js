@@ -1,5 +1,5 @@
 const tasks = {
-    topPosts: require('./tasks/top_posts')
+  topPosts: require('./tasks/top_posts')
 };
 
 tasks.topPosts();
