@@ -73,11 +73,11 @@ module.exports = function () {
                 }
               }
             } else {
-              console.log('Duplicated entry found: ' + wsName + ' - ' + title);
+              console.log(`Duplicated entry found: ${wsName} - ${title}`);
             }
           }
         });
-        result[wsName] = channel;
+        result[wsName] = {name: wsName, content: channel, topCount: topCount};
       });
       resolve(result);
     });
