@@ -11,11 +11,12 @@ module.exports = {
       THUMBNAIL: '封面图片地址',
       DATE: '上传时间',
       CHANNEL: '投稿频道',
+      LINK: '视频地址'
     },
     USER: {
       NAME: '投稿用户昵称',
       AVATAR: '用户头像',
-      LINK: '用户空间',
+      LINK: '用户空间'
     },
     DATA: {
       COMMENTS: '评论数',

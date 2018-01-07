@@ -43,7 +43,7 @@ module.exports = function () {
               let val = row.getCell(colMap[colName]).value;
               if (typeof val === 'string') {
                 return val.trim();
-              } else if (typeof val === 'object' && val.hasOwnProperty('sharedFormula')) {
+              } else if (typeof val === 'object' && (val.hasOwnProperty('result'))) {
                 return val.result;
               }
               return val;
@@ -56,7 +56,8 @@ module.exports = function () {
                   title: utility.parsePostTitle(title),
                   thumbnail: colFunc(row, constants.COL_NAMES.POST.THUMBNAIL),
                   date: colFunc(row, constants.COL_NAMES.POST.DATE),
-                  channel: colFunc(row, constants.COL_NAMES.POST.CHANNEL)
+                  channel: colFunc(row, constants.COL_NAMES.POST.CHANNEL),
+                  link: colFunc(row, constants.COL_NAMES.POST.LINK)
                 },
                 user: {
                   name: colFunc(row, constants.COL_NAMES.USER.NAME),

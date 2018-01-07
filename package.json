@@ -8,6 +8,8 @@
   },
   "author": "zxqdx",
   "dependencies": {
-    "exceljs": "^0.8.1"
+    "exceljs": "^0.8.1",
+    "html-minifier": "^3.5.8",
+    "moment": "^2.20.1"
   }
 }
