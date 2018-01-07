@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = (() => {
   /**
    * Takes a post title, returns the processed title.
    *
@@ -8,25 +8,26 @@ module.exports = {
    *
    * @param title
    */
-  parsePostTitle: (title) => {
+  let parsePostTitle = (title) => {
     title = title.trim();
     let result = [];
-    while (this.stringNotEmpty(title)) {
-      let pairs = this.getCompleteBracketPairs(title), temp;
+    while (stringNotEmpty(title)) {
+      let pairs = getCompleteBracketPairs(title), temp;
       if (pairs) {
-        if (this.stringNotEmpty(temp = title.substring(0, pairs[0]).trim())) result.push({text: temp, box: false});
-        if (this.stringNotEmpty(temp = title.substring(pairs[0] + 1, pairs[1]).trim())) {
+        if (stringNotEmpty(temp = title.substring(0, pairs[0]).trim())) result.push({text: temp, box: false});
+        if (stringNotEmpty(temp = title.substring(pairs[0] + 1, pairs[1]).trim())) {
           result.push({text: temp, box: pairs[2]});
         } else {
           result.push({text: ' ', box: pairs[2]});
         }
-        title = title.substring(pairs[2] + 1).trim();
+        title = title.substring(pairs[1] + 1).trim();
       } else {
         result.push({text: title.trim(), box: false});
         title = "";
       }
     }
-  },
+    return result;
+  };
   
   /**
    * Tests if a string has at least one complete bracket pairs.
@@ -35,19 +36,19 @@ module.exports = {
    *
    * @param str
    */
-  getCompleteBracketPairs: (str) => {
+  let getCompleteBracketPairs = (str) => {
     let start, end;
-    if ((start = str.indexOf('[') > -1) && ((end = str.indexOf(']') > -1))) {
+    if ((start = str.indexOf('[')) > -1 && ((end = str.indexOf(']')) > -1)) {
       return [start, end, "solid"];
-    } else if ((start = str.indexOf('【') > -1) && ((end = str.indexOf('】') > -1))) {
+    } else if ((start = str.indexOf('【')) > -1 && ((end = str.indexOf('】')) > -1)) {
       return [start, end, "solid"];
-    } else if ((start = str.indexOf('(') > -1) && ((end = str.indexOf(')') > -1))) {
+    } else if ((start = str.indexOf('(')) > -1 && ((end = str.indexOf(')')) > -1)) {
       return [start, end, "dashed"];
-    } else if ((start = str.indexOf('（') > -1) && ((end = str.indexOf('）') > -1))) {
+    } else if ((start = str.indexOf('（')) > -1 && ((end = str.indexOf('）')) > -1)) {
       return [start, end, "dashed"];
     }
     return false;
-  },
+  };
   
   /**
    * Tests if a string is not empty.
@@ -56,7 +57,13 @@ module.exports = {
    * @param str
    * @returns {boolean}
    */
-  stringNotEmpty: (str) => {
+  let stringNotEmpty = (str) => {
     return !!(str && str.trim());
-  }
-};
+  };
+  
+  return {
+    parsePostTitle: parsePostTitle,
+    getCompleteBracketPairs: getCompleteBracketPairs,
+    stringNotEmpty: stringNotEmpty
+  };
+})();

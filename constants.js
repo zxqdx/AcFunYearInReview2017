@@ -1,4 +1,7 @@
 module.exports = {
+  XLSX_NAMES: {
+    TOP_POSTS: 'top_posts.xlsx'
+  },
   WS_NAMES: {
     POSTS_OVERALL: '总表去重'
   },
