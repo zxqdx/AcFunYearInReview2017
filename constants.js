@@ -26,5 +26,30 @@ module.exports = {
       SAVES: '收藏数',
       SCORE: '视频得分'
     }
+  },
+  STYLES: {
+    FONT_FAMILY: 'AcFun Symbol, Helvetica Neue, Helvetica, Arial, Microsoft Yahei, STHeiti,sans-serif',
+    STAGE: {
+      WIDTH: 960
+    },
+    POST: {
+      WIDTH: 960,
+      HEIGHT: 145,
+      TITLE: {
+        COLOR: '#333333',
+        HOVER: '#fd4c5d',
+        RANK: '#fd782e'
+      },
+      DESC: {
+        COLOR: '#777777'
+      },
+      DATA: {
+        COLOR: '#777777',
+        HIGHLIGHT: 'black'
+      }
+    },
+    TREND: {
+      COLOR: '#2ab69d'
+    }
   }
 };

@@ -57,13 +57,30 @@ module.exports = (() => {
    * @param str
    * @returns {boolean}
    */
-  let stringNotEmpty = (str) => {
-    return !!(str && str.trim());
+  let stringNotEmpty = (str) => (!!(str && str.trim()));
+  
+  /**
+   * Adds prefix to the given string, if not exists. E.g.:
+   * parseLink("http://www.acfun.cn/v/ac3653961", "http") => "http://www.acfun.cn/v/ac3653961"
+   * parseLink("www.acfun.cn/u/1381832.aspx", "wss") => "wss://www.acfun.cn/u/1381832.aspx"
+   *
+   * @param link
+   * @param prefix
+   */
+  // let parseLink = (link, prefix) => (link.startsWith(prefix) ? link : `${prefix}://${link}`);
+  let parseLink = (link, prefix) => {
+    if (typeof link === "object" && link.hasOwnProperty("text")) {
+      link = link.text;
+    } else if (typeof link !== "string") {
+      link = JSON.stringify(link);
+    }
+    return link.startsWith(prefix) ? link : `${prefix}://${link}`
   };
   
   return {
     parsePostTitle: parsePostTitle,
     getCompleteBracketPairs: getCompleteBracketPairs,
-    stringNotEmpty: stringNotEmpty
+    stringNotEmpty: stringNotEmpty,
+    parseLink: parseLink
   };
 })();
