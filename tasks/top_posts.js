@@ -3,10 +3,10 @@ const utility = require('../utility');
 const path = require('path');
 const Excel = require('exceljs');
 
-module.exports = function () {
+module.exports = function (filename) {
   return new Promise((resolve, reject) => {
     let workbook = new Excel.Workbook();
-    workbook.xlsx.readFile(path.join(__dirname, '../local/', constants.XLSX_NAMES.TOP_POSTS)).then(() => {
+    workbook.xlsx.readFile(path.join(__dirname, '../local/', filename)).then(() => {
       /*
        * channel ->
        *   [
@@ -18,6 +18,7 @@ module.exports = function () {
       let result = {};
       workbook.eachSheet((worksheet, sheetId) => {
         let wsName = worksheet.name.trim();
+        if (wsName === constants.WS_NAMES.POSTS_IGNORED) return;
         /*
          * Overall Ranking: Top 500
          * Ranking by Channel: Top 100
@@ -57,8 +58,9 @@ module.exports = function () {
                   thumbnail: colFunc(row, constants.COL_NAMES.POST.THUMBNAIL),
                   date: colFunc(row, constants.COL_NAMES.POST.DATE),
                   channel: colFunc(row, constants.COL_NAMES.POST.CHANNEL),
-                  link: colFunc(row, constants.COL_NAMES.POST.LINK)
-                },
+                  link: colFunc(row, constants.COL_NAMES.POST.LINK),
+                  desc: utility.joinDesc(colFunc(row, constants.COL_NAMES.POST.DESC))
+              },
                 user: {
                   name: colFunc(row, constants.COL_NAMES.USER.NAME),
                   avatar: colFunc(row, constants.COL_NAMES.USER.AVATAR),

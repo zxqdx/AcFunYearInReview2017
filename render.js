@@ -14,12 +14,13 @@ module.exports = (() => {
             text-align: center; margin: 20px 0 20px 0; padding: 0 0 10px 0; font-family: ${STYLES.FONT_FAMILY};
             border-bottom: 1px dashed #ccc;
         ">
-          AcFun${items.name}区 2017年度热门投稿 <span class="top-count" style="color: ${STYLES.POST.TITLE.HOVER};">
+          AcFun${utility.notAChannel(items.name) ? items.name : (items.name + "区")} 2017年度热门投稿
+          <span class="top-count" style="color: ${STYLES.POST.TITLE.HOVER};">
             Top${items.topCount}
           </span>
         </div>
         ${Object.entries(items.content).map((item, index) =>
-        post.single(item[0], item[1], index, items.name, items.topCount)
+          post.single(item[0], item[1], index, items.name, items.topCount)
         ).join("\n")}
       </div>
     `, {collapseWhitespace: true}), (err) => err ? console.error(err) : null),
@@ -34,32 +35,43 @@ module.exports = (() => {
           </a>
           <a class="user-link" href="${utility.parseLink(item.user.link, 'http')}" target="_blank" style="
             position: relative; top: -40px; left: 202px;
-            -webkit-box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
-            -moz-box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
-            box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
           ">
-            <img class="user-avatar" src="${item.user.avatar}" width="36px" height="36px" style="border-radius: 50%;">
+            <img class="user-avatar" src="${item.user.avatar}" width="36px" height="36px" style="
+              border-radius: 50%;
+              -webkit-box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
+              -moz-box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
+              box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
+            ">
           </a>
         </div>
         <div class="texts" style="width: 710px; height: 135px; float: left; margin: 0 0 0 10px; padding: 0;">
-          <div class="title" title="${title}" style="font-size: 20px; font-weight: bold; height: 26px; overflow: hidden;">
-            <span class="post-rank" style="color: ${STYLES.POST.TITLE.HOVER}">#${index + 1}</span>/${topCount}&nbsp;
+          <div class="title" title="${title}" style="font-size: 20px; font-weight: bold; height: 28px; overflow: hidden;">
+            <span class="post-rank" style="
+              color: ${STYLES.POST.TITLE.HOVER}; font-size: 24px;
+            ">#${index + 1}</span>/${topCount}&nbsp;
             <a class="post-link" href="${utility.parseLink(item.post.link, 'http')}" target="_blank" style="
               text-decoration: none; color: ${STYLES.POST.TITLE.COLOR};
-            " onmouseover="this.style.color='${STYLES.POST.TITLE.HOVER}';"
+            "
+              onmouseover="this.style.color='${STYLES.POST.TITLE.HOVER}';"
               onmouseout="this.style.color='${STYLES.POST.TITLE.COLOR}';">
               ${item.post.title.map((part) => `
                 <span class="box-${part.box}"
                   style="${part.box ? `border: 1px ${STYLES.POST.TITLE.HOVER} ${part.box}` : ''}"
+                  ${part.box ? `
+                    onmouseover="this.style.color='white'; this.style.backgroundColor='${
+                      part.box === "solid" ? STYLES.POST.TITLE.HOVER : "rgba(253, 76, 93, 0.75)"
+                    }';"
+                    onmouseout="this.style.color='inherit'; this.style.backgroundColor='inherit';"
+                  ` : ""}
                 >${part.text}</span>
               `).join("\n")}
             </a>
           </div>
           <div class="description" style="
-            color: ${STYLES.POST.DESC.COLOR}; font-size: 15px; line-height: 20px; margin-top: 8px; margin-bottom: 10px;
+            color: ${STYLES.POST.DESC.COLOR}; font-size: 15px; line-height: 20px; margin-top: 6px; margin-bottom: 10px;
             height: 60px; overflow: hidden;
           ">
-            这部由东京艺术大学动画电影专业一年级的研究生小川育创作的动画短片「I Wanna Be Your Friend」，片中的小怪物为了交到属于自己的朋友，不惜各种改变自己。为了迎合别人，最后可能连命都没了。From GEIDAI ANIMA
+            ${item.post.desc}
           </div>
           <div class="data" style="
             font-size: 14px; line-height: 16px; color: ${STYLES.POST.DATA.COLOR}; letter-spacing: 0.2px;
@@ -72,10 +84,10 @@ module.exports = (() => {
               </span>
               <span class="post-date">${moment(item.post.date).format("YYYY-MM-DD HH:MM:SS")}</span>
               <span class="post-channel">
-                AcFun<span class="channel-text">${topChannel}</span>区${
+                AcFun<span class="channel-text">${utility.notAChannel(topChannel) ? `${item.post.channel}</span>区` : `${topChannel}</span>区${
                   topChannel === item.post.channel ? "" :
                     `下属<span class="channel-text">${item.post.channel}</span>区`
-                }</span>
+                }</span>`}
             </div>
             <div class="data-lower">
               点击<span class="data-text" style="color: ${STYLES.POST.DATA.HIGHLIGHT};">${item.data.views}</span>&nbsp;

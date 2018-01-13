@@ -1,3 +1,5 @@
+const constants = require('./constants');
+
 module.exports = (() => {
   /**
    * Takes a post title, returns the processed title.
@@ -77,10 +79,40 @@ module.exports = (() => {
     return link.startsWith(prefix) ? link : `${prefix}://${link}`
   };
   
+  /**
+   * Joins the desc raw data array into a description string.
+   *
+   * @param str
+   * @returns {*}
+   */
+  let joinDesc = (str) => {
+    if (typeof str === "object" && str.hasOwnProperty("richText")) {
+      return joinDesc(str.richText.map((item) => item.text).join(" "));
+    } else if (typeof str === "object" && str.hasOwnProperty("error")) {
+      return "-";
+    }
+    if (typeof str !== "string") console.dir(str);
+    let len = str.length;
+    str = str.substring(2, len - 2);
+    return str.replace(/[<>]/g, "").replace(/"\s*[,，]\s*"/g, " ");
+  };
+  
+  /**
+   * Checks if a worksheet name is not a valid channel name.
+   *
+   * @param str
+   * @returns {boolean}
+   */
+  let notAChannel = (str) => {
+    return str.endsWith("榜") || str === constants.WS_NAMES.POSTS_OVERALL;
+  };
+  
   return {
     parsePostTitle: parsePostTitle,
     getCompleteBracketPairs: getCompleteBracketPairs,
     stringNotEmpty: stringNotEmpty,
-    parseLink: parseLink
+    parseLink: parseLink,
+    joinDesc: joinDesc,
+    notAChannel: notAChannel
   };
 })();

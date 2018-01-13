@@ -1,9 +1,11 @@
 module.exports = {
   XLSX_NAMES: {
-    TOP_POSTS: 'top_posts.xlsx'
+    TOP_POSTS: 'top_posts_with_desc.xlsx',
+    TOP_OTHERS: 'top_others_with_desc.xlsx'
   },
   WS_NAMES: {
-    POSTS_OVERALL: '总表去重'
+    POSTS_OVERALL: '总表去重',
+    POSTS_IGNORED: '投稿简介'
   },
   COL_NAMES: {
     POST: {
@@ -11,7 +13,8 @@ module.exports = {
       THUMBNAIL: '封面图片地址',
       DATE: '上传时间',
       CHANNEL: '投稿频道',
-      LINK: '视频地址'
+      LINK: '视频地址',
+      DESC: '简介'
     },
     USER: {
       NAME: '投稿用户昵称',
