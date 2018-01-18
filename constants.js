@@ -3,6 +3,9 @@ module.exports = {
     TOP_POSTS: 'top_posts_with_desc.xlsx',
     TOP_OTHERS: 'top_others_with_desc.xlsx'
   },
+  CSV_NAMES: {
+    TOP_BANANAS: 'top_ups_banana_with_avatar.csv'
+  },
   WS_NAMES: {
     POSTS_OVERALL: '总表去重',
     POSTS_IGNORED: '投稿简介'
@@ -28,6 +31,13 @@ module.exports = {
       BANANAS: '香蕉数',
       SAVES: '收藏数',
       SCORE: '视频得分'
+    },
+    UP: {
+      USERNAME: "username",
+      SIGNATURE: "signature",
+      LINK: "用户空间",
+      AVATAR: "user_img",
+      BANANA: "banana"
     }
   },
   STYLES: {
@@ -49,6 +59,15 @@ module.exports = {
       DATA: {
         COLOR: '#777777',
         HIGHLIGHT: 'black'
+      }
+    },
+    UP: {
+      RANK: {
+        COLOR: '#eeeeee'
+      },
+      TOP_10: {
+        WIDTH: 960 - 10,
+        HEIGHT: 120
       }
     },
     TREND: {

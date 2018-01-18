@@ -4,6 +4,8 @@ const moment = require('moment');
 const minify = require('html-minifier').minify;
 const utility = require('./utility');
 const STYLES = require('./constants').STYLES;
+const WS_NAMES = require('./constants').WS_NAMES;
+const COL_NAMES = require('./constants').COL_NAMES;
 
 module.exports = (() => {
   let post = {
@@ -14,7 +16,9 @@ module.exports = (() => {
             text-align: center; margin: 20px 0 20px 0; padding: 0 0 10px 0; font-family: ${STYLES.FONT_FAMILY};
             border-bottom: 1px dashed #ccc;
         ">
-          AcFun${utility.notAChannel(items.name) ? items.name : (items.name + "区")} 2017年度热门投稿
+          AcFun${
+            utility.notAChannel(items.name) ? (items.name === WS_NAMES.POSTS_OVERALL ? "全站" : items.name) : (items.name + "区")
+          } 2017年度热门投稿
           <span class="top-count" style="color: ${STYLES.POST.TITLE.HOVER};">
             Top${items.topCount}
           </span>
@@ -27,7 +31,7 @@ module.exports = (() => {
     single: (title, item, index, topChannel, topCount) => `
       <div class="post" style="
         width: ${STYLES.POST.WIDTH}px; height: ${STYLES.POST.HEIGHT}px; margin: 10px 0 0 0; padding: 5px 0;
-        font-family: ${STYLES.FONT_FAMILY};
+        font-family: ${STYLES.FONT_FAMILY}; overflow: hidden;
       ">
         <div class="images" style="width: 240px; height: 135px; float: left;">
           <a class="post-link" href="${utility.parseLink(item.post.link, 'http')}" target="_blank">
@@ -105,23 +109,76 @@ module.exports = (() => {
     `
   };
   let user = {
-    overall: (items) => {},
-    single: (item, index) => `
-      <div class="user">
-        <div class="images">
-          <a class="user-link" href="${utility.parseLink(item.user.link, 'http')}" target="_blank">
-            <img class="user-avatar" src="">
-          </a>
+    overall: (items) => fs.writeFile(path.join(__dirname, "./output/", `蕉布斯榜.html`), minify(`
+      <div class="main-stage" style="width: ${STYLES.STAGE.WIDTH}; margin: 0 auto; padding: 0;">
+        <div class="ranking-title" style="
+            width: ${STYLES.STAGE.WIDTH}px; height: 36px; font-size: 36px; line-height: 36px; font-weight: bold;
+            text-align: center; margin: 20px 0 20px 0; padding: 0 0 10px 0; font-family: ${STYLES.FONT_FAMILY};
+            border-bottom: 1px dashed #ccc;
+        ">
+          AcFun蕉布斯榜 2017年度UP主
+          <span class="top-count" style="color: ${STYLES.POST.TITLE.HOVER};">
+            Top${items.length}
+          </span>
         </div>
-        <div class="texts">
-          <div class="title">
-            #${index}/${topCount}&nbsp;
-          </div>
-          <div class="description"></div>
-          <div class="data"></div>
-        </div>
+        ${items.map((item, index) =>
+          user.single(
+            item[COL_NAMES.UP.USERNAME], item[COL_NAMES.UP.SIGNATURE], "http://" + item[COL_NAMES.UP.LINK],
+            item[COL_NAMES.UP.AVATAR], item[COL_NAMES.UP.BANANA], index, items.length)
+        ).join("\n")}
       </div>
-  `
+    `, {collapseWhitespace: true}), (err) => err ? console.error(err) : null),
+    single: (username, signature, link, avatar, bananas, index, topCount) => {
+      signature = signature.replace(/政策/g, "");
+      if (index < 10) { // Template for Top 10
+        return `
+          <div class="up" style="
+            width: ${STYLES.UP.TOP_10.WIDTH}px; height: ${STYLES.UP.TOP_10.HEIGHT}px; margin: 10px 0; padding: 10px 5px;
+            font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
+          ">
+            <div class="images" style="float: left;">
+              <a class="user-link" href="${link}" target="_blank">
+                <img class="user-avatar" src="${avatar}" width="120px" height="120px" style="
+                  border-radius: 50%;
+                  -webkit-box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
+                  -moz-box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
+                  box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
+                ">
+              </a>
+            </div>
+            <div class="texts" style="width: 600px; float: left; margin: 0 20px; padding: 0;">
+              <div class="title" style="font-size: 28px; line-height: 28px; height: 28px">
+                <a href="${link}" target="_blank" style="text-decoration: none; color: ${STYLES.POST.TITLE.COLOR};"
+                  onmouseover="this.style.color='${STYLES.POST.TITLE.HOVER}';"
+                  onmouseout="this.style.color='${STYLES.POST.TITLE.COLOR}';"
+                >${username}</a>
+              </div>
+              <div class="description" style="
+                font-size: 16px; line-height: 20px; padding: 6px 0 8px 0; height: 60px;
+                color: ${STYLES.POST.DESC.COLOR}; overflow: hidden
+              ">
+                ${signature}
+              </div>
+              <div class="data" style="font-size: 14px; line-height: 16px; color: ${STYLES.POST.DATA.COLOR}; letter-spacing: 0.2px;">
+                今年共获得了<span class="data-text" style="color: ${STYLES.POST.DATA.HIGHLIGHT};">${bananas}</span>根香蕉
+              </div>
+            </div>
+            <div class="rank" style="
+              float: left; width: 180px; height: 120px; letter-spacing: -10px; font-size: 92px;
+              text-align: right; color: ${STYLES.UP.RANK.COLOR}; padding-top: 35px;
+            ">
+              #<span class="post-rank" style="
+                color: ${STYLES.POST.TITLE.HOVER};
+              ">${index + 1}</span>
+            </div>
+          </div>
+        `;
+      } else if (index < 100) { // Template for Top 100
+        return ``;
+      } else { // Template for Top 1000
+        return ``;
+      }
+    }
   };
   return {
     post: post,
