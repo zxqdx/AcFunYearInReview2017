@@ -72,6 +72,14 @@ module.exports = {
       TOP_100: {
         WIDTH: 960 / 2 - 10,
         HEIGHT: 90
+      },
+      TOP_1000: {
+        WIDTH: 960 / 10,
+        HEIGHT: 120
+      },
+      TITLE: {
+        COLOR: '#999999',
+        HOVER: '#fd4c5d'
       }
     },
     TREND: {

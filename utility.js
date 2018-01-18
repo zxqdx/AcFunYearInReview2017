@@ -94,7 +94,7 @@ module.exports = (() => {
     if (typeof str !== "string") console.dir(str);
     let len = str.length;
     str = str.substring(2, len - 2);
-    return str.replace(/[<>]/g, "").replace(/"\s*[,，]\s*"/g, " ");
+    return str.replace(/[<>]/g, "").replace(/"\s*[,，]\s*"/g, " ").replace(/隔壁/g, "");
   };
   
   /**

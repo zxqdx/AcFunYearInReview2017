@@ -10,6 +10,9 @@ const COL_NAMES = require('./constants').COL_NAMES;
 module.exports = (() => {
   let post = {
     overall: (items) => fs.writeFile(path.join(__dirname, "./output/", `${items.name}_${items.topCount}.html`), minify(`
+    <html lang="en">
+    <head><meta charset="utf-8"></head>
+    <body>
       <div class="main-stage" style="width: ${STYLES.STAGE.WIDTH}; margin: 0 auto; padding: 0;">
         <div class="ranking-title" style="
             width: ${STYLES.STAGE.WIDTH}px; height: 36px; font-size: 36px; line-height: 36px; font-weight: bold;
@@ -27,6 +30,7 @@ module.exports = (() => {
           post.single(item[0], item[1], index, items.name, items.topCount)
         ).join("\n")}
       </div>
+    </body></html>
     `, {collapseWhitespace: true}), (err) => err ? console.error(err) : null),
     single: (title, item, index, topChannel, topCount) => `
       <div class="post" style="
@@ -110,6 +114,9 @@ module.exports = (() => {
   };
   let user = {
     overall: (items) => fs.writeFile(path.join(__dirname, "./output/", `蕉布斯榜.html`), minify(`
+    <html lang="en">
+    <head><meta charset="utf-8"></head>
+    <body>
       <div class="main-stage" style="width: ${STYLES.STAGE.WIDTH}; margin: 0 auto; padding: 0;">
         <div class="ranking-title" style="
             width: ${STYLES.STAGE.WIDTH}px; height: 36px; font-size: 36px; line-height: 36px; font-weight: bold;
@@ -127,22 +134,24 @@ module.exports = (() => {
             item[COL_NAMES.UP.AVATAR], item[COL_NAMES.UP.BANANA], index)
         ).join("\n")}
       </div>
+    </body></html>
     `, {collapseWhitespace: true}), (err) => err ? console.error(err) : null),
     single: (username, signature, link, avatar, bananas, index) => {
       signature = signature.replace(/政策/g, "");
       if (index < 10) { // Template for Top 10
         return `
           <div class="up" style="
-            width: ${STYLES.UP.TOP_10.WIDTH}px; height: ${STYLES.UP.TOP_10.HEIGHT}px; margin: 10px 0; padding: 10px 5px;
+            width: ${STYLES.UP.TOP_10.WIDTH}px; height: ${STYLES.UP.TOP_10.HEIGHT}px; margin: 20px 0; padding: 10px 5px;
             font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
           ">
             <div class="images" style="float: left;">
-              <a class="user-link" href="${link}" target="_blank">
+              <a class="user-link" href="${link}" target="_blank" style="cursor: default;">
                 <img class="user-avatar" src="${avatar}" width="120px" height="120px" style="
                   border-radius: 50%;
                   -webkit-box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
                   -moz-box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
                   box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
+                  cursor: pointer;
                 ">
               </a>
             </div>
@@ -177,16 +186,17 @@ module.exports = (() => {
         let usernameFontSize = username.length > 11 ? "20px" : "24px";
         return `
           <div class="up" style="
-            width: ${STYLES.UP.TOP_100.WIDTH}px; height: ${STYLES.UP.TOP_100.HEIGHT}px; margin: 10px 0; padding: 10px 5px;
+            width: ${STYLES.UP.TOP_100.WIDTH}px; height: ${STYLES.UP.TOP_100.HEIGHT}px; margin: 20px 0; padding: 10px 5px;
             font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
           ">
             <div class="images" style="float: left;">
-              <a class="user-link" href="${link}" target="_blank">
+              <a class="user-link" href="${link}" target="_blank" style="cursor: default;">
                 <img class="user-avatar" src="${avatar}" width="90px" height="90px" style="
                   border-radius: 50%;
                   -webkit-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
                   -moz-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
                   box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
+                  cursor: pointer;
                 ">
               </a>
             </div>
@@ -215,7 +225,38 @@ module.exports = (() => {
           </div>
         `;
       } else { // Template for Top 1000
-        return ``;
+        let usernameFontSize = username.length > 6 ? "14px" : "16px";
+        let title = `#${index + 1} ${username} 今年共获得了${bananas}根香蕉`;
+        return `
+          <div class="up" style="
+            width: ${STYLES.UP.TOP_1000.WIDTH}px; height: ${STYLES.UP.TOP_1000.HEIGHT}px; margin: 0; padding: 10px 3px;
+            font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
+          ">
+            <div class="images">
+              <a class="user-link" href="${link}" target="_blank" style="cursor: default;">
+                <img class="user-avatar" src="${avatar}" width="90px" height="90px" style="
+                  border-radius: 50%;
+                  -webkit-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
+                  -moz-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
+                  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
+                  cursor: pointer;
+                " title="${title}">
+              </a>
+            </div>
+            <div class="texts" style="width: 96px; margin: 6px 0 0 0; padding: 0;">
+              <div class="title" style="overflow: hidden;">
+                <div class="up-username" style="
+                  font-size: ${usernameFontSize}; line-height: 20px; height: 20px; text-align: center; word-break: break-all;
+                ">
+                  <a href="${link}" target="_blank" title="${title}" style="text-decoration: none; color: ${STYLES.UP.TITLE.COLOR};"
+                    onmouseover="this.style.color='${STYLES.UP.TITLE.HOVER}';"
+                    onmouseout="this.style.color='${STYLES.UP.TITLE.COLOR}';"
+                  >${username}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
       }
     }
   };
