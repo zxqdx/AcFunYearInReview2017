@@ -68,6 +68,10 @@ module.exports = {
       TOP_10: {
         WIDTH: 960 - 10,
         HEIGHT: 120
+      },
+      TOP_100: {
+        WIDTH: 960 / 2 - 10,
+        HEIGHT: 90
       }
     },
     TREND: {

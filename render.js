@@ -124,11 +124,11 @@ module.exports = (() => {
         ${items.map((item, index) =>
           user.single(
             item[COL_NAMES.UP.USERNAME], item[COL_NAMES.UP.SIGNATURE], "http://" + item[COL_NAMES.UP.LINK],
-            item[COL_NAMES.UP.AVATAR], item[COL_NAMES.UP.BANANA], index, items.length)
+            item[COL_NAMES.UP.AVATAR], item[COL_NAMES.UP.BANANA], index)
         ).join("\n")}
       </div>
     `, {collapseWhitespace: true}), (err) => err ? console.error(err) : null),
-    single: (username, signature, link, avatar, bananas, index, topCount) => {
+    single: (username, signature, link, avatar, bananas, index) => {
       signature = signature.replace(/政策/g, "");
       if (index < 10) { // Template for Top 10
         return `
@@ -174,7 +174,46 @@ module.exports = (() => {
           </div>
         `;
       } else if (index < 100) { // Template for Top 100
-        return ``;
+        let usernameFontSize = username.length > 11 ? "20px" : "24px";
+        return `
+          <div class="up" style="
+            width: ${STYLES.UP.TOP_100.WIDTH}px; height: ${STYLES.UP.TOP_100.HEIGHT}px; margin: 10px 0; padding: 10px 5px;
+            font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
+          ">
+            <div class="images" style="float: left;">
+              <a class="user-link" href="${link}" target="_blank">
+                <img class="user-avatar" src="${avatar}" width="90px" height="90px" style="
+                  border-radius: 50%;
+                  -webkit-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
+                  -moz-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
+                  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
+                ">
+              </a>
+            </div>
+            <div class="texts" style="width: 340px; float: left; margin: 0 20px; padding: 0;">
+              <div class="title" style="overflow: hidden;">
+                <div class="up-rank" style="
+                  font-size: 28px; line-height: 28px; height: 28px; width: 66px; color: ${STYLES.POST.TITLE.HOVER}; float: left;
+                ">#${index + 1}</div>
+                <div class="up-username" style="
+                  font-size: ${usernameFontSize}; line-height: 28px; height: 28px; float: left;
+                ">
+                  <a href="${link}" target="_blank" style="text-decoration: none; color: ${STYLES.POST.TITLE.COLOR};"
+                    onmouseover="this.style.color='${STYLES.POST.TITLE.HOVER}';"
+                    onmouseout="this.style.color='${STYLES.POST.TITLE.COLOR}';"
+                  >${username}</a>
+                </div>
+              </div>
+              <div class="description" style="
+                font-size: 16px; line-height: 20px; margin: 4px 0 6px 0; height: 40px;
+                color: ${STYLES.POST.DESC.COLOR}; overflow: hidden; clear: both;
+              ">${signature}</div>
+              <div class="data" style="font-size: 14px; line-height: 16px; color: ${STYLES.POST.DATA.COLOR}; letter-spacing: 0.2px;">
+                今年共获得了<span class="data-text" style="color: ${STYLES.POST.DATA.HIGHLIGHT};">${bananas}</span>根香蕉
+              </div>
+            </div>
+          </div>
+        `;
       } else { // Template for Top 1000
         return ``;
       }
