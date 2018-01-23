@@ -29,6 +29,7 @@ module.exports = (() => {
         ${Object.entries(items.content).map((item, index) =>
           post.single(item[0], item[1], index, items.name, items.topCount)
         ).join("\n")}
+        ${staff()}
       </div>
     </body></html>
     `, {collapseWhitespace: true}), (err) => err ? console.error(err) : null),
@@ -133,6 +134,7 @@ module.exports = (() => {
             item[COL_NAMES.UP.USERNAME], item[COL_NAMES.UP.SIGNATURE], "http://" + item[COL_NAMES.UP.LINK],
             item[COL_NAMES.UP.AVATAR], item[COL_NAMES.UP.BANANA], index)
         ).join("\n")}
+        ${staff()}
       </div>
     </body></html>
     `, {collapseWhitespace: true}), (err) => err ? console.error(err) : null),
@@ -259,6 +261,37 @@ module.exports = (() => {
         `;
       }
     }
+  };
+  let staff = () => {
+    return `
+      <div class="trend-staff" style="
+        clear: both; width: ${STYLES.STAGE.WIDTH}; margin: 0 0 60px 0; padding: 30px 0 0 0; font-family: ${STYLES.FONT_FAMILY};
+        border-top: 1px dashed #ccc;
+      ">
+        <div class="
+          staff-title" style="width: ${STYLES.STAGE.WIDTH}; text-align: center;
+          height: 36px; font-size: 36px; line-height: 36px; font-weight: bold; margin: 0 0 20px 0;
+        ">感谢观看 &bull; 其他榜单更多精彩</div>
+        <div class="staff-content" style="font-size: 18px; line-height: 32px;">
+          <span style="font-weight: bold; color: ${STYLES.TREND.COLOR}; display: inline-block; margin: 0 100px;">数据提供</span>
+          monk8（AcFun猴子） &bull;&nbsp;&nbsp;
+          其他技术猴的昵称（职称）
+          <br>
+          <span style="font-weight: bold; color: ${STYLES.TREND.COLOR}; display: inline-block; margin: 0 100px;">美术提供</span>
+          美术猴昵称（职称） &bull;&nbsp;&nbsp;
+          美术猴昵称（职称）
+          <br>
+          <span style="font-weight: bold; color: ${STYLES.TREND.COLOR}; display: inline-block; margin: 0 100px;">制作人员</span>
+          AcFun趋势（趋势娘） &bull;&nbsp;&nbsp;
+          zxqdx（趋势二代目） &bull;&nbsp;&nbsp;
+          初の灵（游戏区UP主）
+          <br>
+          <span style="font-weight: bold; color: ${STYLES.TREND.COLOR}; display: inline-block; margin: 0 100px;">友情支持</span>
+          五原吕奉先（趋势一代目） &bull;&nbsp;&nbsp;
+          swgr小6（趋势娘技术总监）
+        </div>
+      </div>
+    `;
   };
   return {
     post: post,
