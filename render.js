@@ -118,7 +118,7 @@ module.exports = (() => {
     <html lang="en">
     <head><meta charset="utf-8"></head>
     <body>
-      <div class="main-stage" style="width: ${STYLES.STAGE.WIDTH}; margin: 0 auto; padding: 0;">
+      <div class="main-stage" style="width: ${STYLES.STAGE.SPECIAL_WIDTH}px; margin: 0 auto; padding: 0;">
         <div class="ranking-title" style="
             width: ${STYLES.STAGE.WIDTH}px; height: 36px; font-size: 36px; line-height: 36px; font-weight: bold;
             text-align: center; margin: 20px 0 20px 0; padding: 0 0 10px 0; font-family: ${STYLES.FONT_FAMILY};
@@ -143,13 +143,13 @@ module.exports = (() => {
       if (index < 10) { // Template for Top 10
         return `
           <div class="up" style="
-            width: ${STYLES.UP.TOP_10.WIDTH}px; height: ${STYLES.UP.TOP_10.HEIGHT}px; margin: 20px 0; padding: 10px 5px;
-            font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
+            width: ${STYLES.UP.TOP_10.WIDTH}px !important; height: ${STYLES.UP.TOP_10.HEIGHT}px; margin: 20px 0; padding: 10px 5px;
+            font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden; line-height: initial;
           ">
             <div class="images" style="float: left;">
               <a class="user-link" href="${link}" target="_blank" style="cursor: default;">
                 <img class="user-avatar" src="${avatar}" width="120px" height="120px" style="
-                  border-radius: 50%;
+                  border-radius: 50%; margin: 0;
                   -webkit-box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
                   -moz-box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
                   box-shadow: 0 1px 8px 0 rgba(0,0,0,0.6);
@@ -157,7 +157,7 @@ module.exports = (() => {
                 ">
               </a>
             </div>
-            <div class="texts" style="width: 600px; float: left; margin: 0 20px; padding: 0;">
+            <div class="texts" style="width: 600px !important; float: left; margin: 0 20px; padding: 0;">
               <div class="title" style="font-size: 28px; line-height: 28px; height: 28px">
                 <a href="${link}" target="_blank" style="text-decoration: none; color: ${STYLES.POST.TITLE.COLOR};"
                   onmouseover="this.style.color='${STYLES.POST.TITLE.HOVER}';"
@@ -171,7 +171,7 @@ module.exports = (() => {
                 ${signature}
               </div>
               <div class="data" style="font-size: 14px; line-height: 16px; color: ${STYLES.POST.DATA.COLOR}; letter-spacing: 0.2px;">
-                今年共获得了<span class="data-text" style="color: ${STYLES.POST.DATA.HIGHLIGHT};">${bananas}</span>根香蕉
+                今年共获得了<span class="data-text" style="color: ${STYLES.POST.DATA.HIGHLIGHT}; vertical-align: baseline;">${bananas}</span>根香蕉
               </div>
             </div>
             <div class="rank" style="
@@ -179,7 +179,7 @@ module.exports = (() => {
               text-align: right; color: ${STYLES.UP.RANK.COLOR}; padding-top: 35px;
             ">
               #<span class="post-rank" style="
-                color: ${STYLES.POST.TITLE.HOVER};
+                color: ${STYLES.POST.TITLE.HOVER}; vertical-align: baseline;
               ">${index + 1}</span>
             </div>
           </div>
@@ -188,13 +188,13 @@ module.exports = (() => {
         let usernameFontSize = username.length > 11 ? "20px" : "24px";
         return `
           <div class="up" style="
-            width: ${STYLES.UP.TOP_100.WIDTH}px; height: ${STYLES.UP.TOP_100.HEIGHT}px; margin: 20px 0; padding: 10px 5px;
+            width: ${STYLES.UP.TOP_100.WIDTH}px !important; height: ${STYLES.UP.TOP_100.HEIGHT}px !important; margin: 20px 0; padding: 10px 5px;
             font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
           ">
             <div class="images" style="float: left;">
               <a class="user-link" href="${link}" target="_blank" style="cursor: default;">
                 <img class="user-avatar" src="${avatar}" width="90px" height="90px" style="
-                  border-radius: 50%;
+                  border-radius: 50%; margin: 0;
                   -webkit-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
                   -moz-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
                   box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
@@ -202,7 +202,7 @@ module.exports = (() => {
                 ">
               </a>
             </div>
-            <div class="texts" style="width: 340px; float: left; margin: 0 20px; padding: 0;">
+            <div class="texts" style="width: 340px !important; float: left; margin: 0 20px; padding: 0;">
               <div class="title" style="overflow: hidden;">
                 <div class="up-rank" style="
                   font-size: 28px; line-height: 28px; height: 28px; width: 66px; color: ${STYLES.POST.TITLE.HOVER}; float: left;
@@ -221,7 +221,7 @@ module.exports = (() => {
                 color: ${STYLES.POST.DESC.COLOR}; overflow: hidden; clear: both;
               ">${signature}</div>
               <div class="data" style="font-size: 14px; line-height: 16px; color: ${STYLES.POST.DATA.COLOR}; letter-spacing: 0.2px;">
-                今年共获得了<span class="data-text" style="color: ${STYLES.POST.DATA.HIGHLIGHT};">${bananas}</span>根香蕉
+                今年共获得了<span class="data-text" style="color: ${STYLES.POST.DATA.HIGHLIGHT}; vertical-align: baseline;">${bananas}</span>根香蕉
               </div>
             </div>
           </div>
@@ -231,10 +231,10 @@ module.exports = (() => {
         let title = `#${index + 1} ${username} 今年共获得了${bananas}根香蕉`;
         return `
           <div class="up" style="
-            width: ${STYLES.UP.TOP_1000.WIDTH}px; height: ${STYLES.UP.TOP_1000.HEIGHT}px; margin: 0; padding: 10px 3px;
+            width: ${STYLES.UP.TOP_1000.WIDTH}px !important; height: ${STYLES.UP.TOP_1000.HEIGHT}px; margin: 0; padding: 10px 3px;
             font-family: ${STYLES.FONT_FAMILY}; float: left; overflow: hidden;
           ">
-            <div class="images">
+            <div class="images" style="margin: 0; height: 90px;">
               <a class="user-link" href="${link}" target="_blank" style="cursor: default;">
                 <img class="user-avatar" src="${avatar}" width="90px" height="90px" style="
                   border-radius: 50%;
@@ -242,6 +242,7 @@ module.exports = (() => {
                   -moz-box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
                   box-shadow: 0 1px 6px 0 rgba(0,0,0,0.6);
                   cursor: pointer;
+                  margin: 0;
                 " title="${title}">
               </a>
             </div>

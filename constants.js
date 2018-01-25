@@ -43,7 +43,8 @@ module.exports = {
   STYLES: {
     FONT_FAMILY: 'AcFun Symbol, Helvetica Neue, Helvetica, Arial, Microsoft Yahei, STHeiti,sans-serif',
     STAGE: {
-      WIDTH: 960
+      WIDTH: 960,
+      SPECIAL_WIDTH: 980
     },
     POST: {
       WIDTH: 960,
@@ -67,15 +68,15 @@ module.exports = {
       },
       TOP_10: {
         WIDTH: 960 - 10,
-        HEIGHT: 120
+        HEIGHT: 130
       },
       TOP_100: {
-        WIDTH: 960 / 2 - 10,
-        HEIGHT: 90
+        WIDTH: 960 / 2,
+        HEIGHT: 120
       },
       TOP_1000: {
         WIDTH: 960 / 10,
-        HEIGHT: 120
+        HEIGHT: 130
       },
       TITLE: {
         COLOR: '#999999',
