@@ -275,12 +275,14 @@ module.exports = (() => {
         ">感谢观看 &bull; 其他榜单更多精彩</div>
         <div class="staff-content" style="font-size: 18px; line-height: 32px;">
           <span style="font-weight: bold; color: ${STYLES.TREND.COLOR}; display: inline-block; margin: 0 100px;">数据提供</span>
-          monk8（AcFun猴子） &bull;&nbsp;&nbsp;
-          其他技术猴的昵称（职称）
+          凯伦 &bull;&nbsp;&nbsp;
+          星然 &bull;&nbsp;&nbsp;
+          233 &bull;&nbsp;&nbsp;
+          大魏
           <br>
           <span style="font-weight: bold; color: ${STYLES.TREND.COLOR}; display: inline-block; margin: 0 100px;">美术提供</span>
-          美术猴昵称（职称） &bull;&nbsp;&nbsp;
-          美术猴昵称（职称）
+          Λ &bull;&nbsp;&nbsp;
+          C
           <br>
           <span style="font-weight: bold; color: ${STYLES.TREND.COLOR}; display: inline-block; margin: 0 100px;">制作人员</span>
           AcFun趋势（趋势娘） &bull;&nbsp;&nbsp;
